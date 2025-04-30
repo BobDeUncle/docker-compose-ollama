@@ -38,8 +38,10 @@ You should see both the Ollama and Watchtower containers running.
 Ollama is accessible on port 11434. You can interact with it using:
 
 - The [Ollama CLI client](https://github.com/ollama/ollama#client-usage)
+   - My docker-compose configuration can be found [here](https://github.com/BobDeUncle/docker-compose-ollamawebui)
 - Ollama's REST API
 - Compatible UI applications like [OpenWebUI](https://github.com/open-webui/open-webui)
+   - My docker-compose configuration can be found [here](https://github.com/BobDeUncle/docker-compose-openwebui)
 
 ## Configuration
 
