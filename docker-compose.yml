@@ -1,0 +1,42 @@
+version: '3'
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    networks:
+      - llm-network
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      
+  watchtower-ollama:
+    image: containrrr/watchtower
+    container_name: watchtower-ollama
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=900  # Check every 15 minutes
+      - WATCHTOWER_SCOPE=ollama-scope
+    restart: always
+    networks:
+      - llm-network
+
+networks:
+  llm-network:
+    name: llm-network-compose
+    driver: bridge
+
+volumes:
+  ollama-data:
